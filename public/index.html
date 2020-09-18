@@ -1,0 +1,24 @@
+<h1>Hello</h1>
+<label>set</label>
+<form onsubmit="send(event)">
+  <label>password</label>
+  <input id="set-password" name="set-password" type="password">
+  <input type="submit"/>
+</form>
+<label>check</label>
+<form onsubmit="send(event)">
+  <label>password</label>
+  <input id="check-password" name="check-password" type="password">
+  <input type="submit"/>
+</form>
+
+<script>
+
+function send(e){
+  e.preventDefault()
+  console.log(e.target)
+  fetch('/submit', {
+      method: 'post',
+      body: serialize(e.target),
+  })
+}
