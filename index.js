@@ -19,7 +19,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
 
-app.post('/submit', (req, res) => {
+app.post('/register', (req, res) => {
   if (Object.keys(tokens).includes(req.body.email)) {
     res.send({status: "email taken"})
   } else {
