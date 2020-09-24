@@ -24,11 +24,11 @@
     e.preventDefault()
     let form = e.target
     let formData = new FormData(form)
-    var object = {}
+    let object = {}
     formData.forEach(function(value, key){
         object[key] = value
     })
-    var json = JSON.stringify(object);
+    let json = JSON.stringify(object);
 
     const response = await fetch('/register', {
       headers: {'Content-Type': 'application/json'},
@@ -43,11 +43,11 @@
     e.preventDefault()
     let form = e.target
     let formData = new FormData(form)
-    var object = {}
+    let object = {}
     formData.forEach(function(value, key){
         object[key] = value
     })
-    var json = JSON.stringify(object);
+    let json = JSON.stringify(object);
 
     const response = await fetch('/session', {
       headers: {'Content-Type': 'application/json'},
