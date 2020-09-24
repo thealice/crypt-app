@@ -1,7 +1,5 @@
 const bcrypt = require('bcrypt')
 const saltRounds = 12
-const myPlaintextPassword = 'bacon'
-const someOtherPlaintextPassword = 'not_bacon'
 const sessions = []
 const express = require('express')
 const app = express()
