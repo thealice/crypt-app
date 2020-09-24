@@ -1,24 +1,59 @@
-<h1>Hello</h1>
-<label>set</label>
-<form onsubmit="send(event)">
+<h1>hello</h1>
+<h2>register</h2>
+<form id ="reg" onsubmit="send(event)">
+  <label>email</label>
+  <input id="email" name="email" type="text" required>
+ 
   <label>password</label>
-  <input id="set-password" name="set-password" type="password">
+  <input id="password" name="password" type="password" required>
   <input type="submit"/>
 </form>
-<label>check</label>
-<form onsubmit="send(event)">
+
+<h2>login</h2>
+<form id ="login" onsubmit="login(event)">
+  <label>email</label>
+  <input id="email" name="email" type="text" required>
+ 
   <label>password</label>
-  <input id="check-password" name="check-password" type="password">
+  <input id="password" name="password" type="password" required>
   <input type="submit"/>
 </form>
 
 <script>
+  async function send(e){
+    e.preventDefault()
+    let form = e.target
+    let formData = new FormData(form)
+    var object = {}
+    formData.forEach(function(value, key){
+        object[key] = value
+    })
+    var json = JSON.stringify(object);
 
-function send(e){
-  e.preventDefault()
-  console.log(e.target)
-  fetch('/register', {
+    const response = await fetch('/register', {
+      headers: {'Content-Type': 'application/json'},
       method: 'post',
-      body: serialize(e.target),
-  })
-}
+      body: json,
+    })
+    console.log(response)
+  }
+
+
+  async function login(e){
+    e.preventDefault()
+    let form = e.target
+    let formData = new FormData(form)
+    var object = {}
+    formData.forEach(function(value, key){
+        object[key] = value
+    })
+    var json = JSON.stringify(object);
+
+    const response = await fetch('/session', {
+      headers: {'Content-Type': 'application/json'},
+      method: 'post',
+      body: json,
+    })
+    console.log(response)
+  }
+</script>
