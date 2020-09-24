@@ -20,6 +20,7 @@ app.get('/', (req, res) => {
 })
 
 app.post('/register', (req, res) => {
+  // would check the database instead of tokens if i had it set up
   if (Object.keys(tokens).includes(req.body.email)) {
     res.send({status: "email taken"})
   } else {
@@ -27,7 +28,7 @@ app.post('/register', (req, res) => {
         // Store hash in your password DB.
         tokens[req.body.email] = hash
         console.log(tokens)
-        res.send({ message: "registration complete" });
+        res.send({ status: "registration complete" });
       })
   }
 
@@ -37,9 +38,9 @@ app.post('/register', (req, res) => {
 app.post('/session', (req, res)=>{
   bcrypt.compare(req.body.password, tokens[req.body.email], function(err, result) {
     if (result){
-      res.send({login: "ok"})
+      res.send({status: "ok"})
     } else {
-      res.send({login: "invalid"})
+      res.send({status: "invalid"})
     }
   })
 })

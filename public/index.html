@@ -1,5 +1,6 @@
 <h1>hello</h1>
 <h2>register</h2>
+<p id="status"></p>
 <form id ="reg" onsubmit="send(event)">
   <label>email</label>
   <input id="email" name="email" type="text" required>
@@ -35,7 +36,9 @@
       method: 'post',
       body: json,
     })
-    console.log(response)
+    let message = await response.json()
+    document.getElementById("status")
+    .innerText = message.status
   }
 
 
@@ -54,6 +57,9 @@
       method: 'post',
       body: json,
     })
-    console.log(response)
+    let message = await response.json()
+    document.getElementById("status")
+    .innerText = message.status
+
   }
 </script>
