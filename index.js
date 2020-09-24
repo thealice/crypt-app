@@ -1,7 +1,9 @@
 const bcrypt = require('bcrypt')
-const saltRounds = 12
+const salt = 12
+
 const sessions = []
 const express = require('express')
+const bodyParser = require('body-parser')
 const app = express()
 
 const port = 3000
