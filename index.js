@@ -5,26 +5,43 @@ const express = require('express')
 const app = express()
 
 const port = 3000
-app.use(express.static(__dirname + '/public'));
+
+// just storing this here before adding firebase db
+let tokens = {}
+
+app.use(express.static(__dirname + '/public'))
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
 
 app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html');
+  //res.send('Hello class!!!!')
+  res.sendFile(__dirname + '/index.html')
 })
 
 app.post('/submit', (req, res) => {
-  // req header
-  // genSalt bcrypt hash
-  // add record to DB
+  if (Object.keys(tokens).includes(req.body.email)) {
+    res.send({status: "email taken"})
+  } else {
+      bcrypt.hash(req.body.password, salt, function(err, hash) {
+        // Store hash in your password DB.
+        tokens[req.body.email] = hash
+        console.log(tokens)
+        res.send({ message: "registration complete" });
+      })
+  }
+
+
 })
 
 app.post('/session', (req, res)=>{
-  //look in the header for password data
-  // check the email associated with this password
-  // bcryct compare 
-  // if statement
-  // add session to memory db
-  // send back an ok status
-  // else reject
+  bcrypt.compare(req.body.password, tokens[req.body.email], function(err, result) {
+    if (result){
+      res.send({login: "ok"})
+    } else {
+      res.send({login: "invalid"})
+    }
+  })
 })
 
 app.delete("/session",  () =>{
@@ -33,21 +50,17 @@ app.delete("/session",  () =>{
 })
 
 app.listen(port, () => {
-  console.log(`Beginner app listening at http://localhost:${port}`)
+  console.log(`App listening at http://localhost:${port}`)
 })
 
-bcrypt.genSalt(saltRounds, function(err, salt) {
-    bcrypt.hash(myPlaintextPassword, salt, function(err, hash) {
-        // Store hash in your password DB.
 
-      bcrypt.compare('bacon', hash, function(err, result) {
-        console.log(hash)
-        console.log('bacon', result)
 
-      });
-      bcrypt.compare('bacon2', hash, function(err, result) {
-        console.log('bacon2', result)
-          // result == false
-      });
-    })
-})
+      // bcrypt.compare('bacon', hash, function(err, result) {
+      //   console.log(hash)
+      //   console.log('bacon', result)
+
+      // });
+      // bcrypt.compare('bacon2', hash, function(err, result) {
+      //   console.log('bacon2', result)
+      //     // result == false
+      // });
